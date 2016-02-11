@@ -1,0 +1,29 @@
+{
+  "name": "fidor-pusher",
+  "version": "0.1.0",
+  "description": "A tiny helper to ping the user on any account movement",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kulturpessimist/fidor-pusher.git"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "worker": "node worker.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "nano": "^6.2.0",
+    "oauth": "^0.9.14",
+    "oauth2-client-js": "0.0.15",
+    "pushover-notifications": "^0.2.2",
+    "sendgrid": "^2.0.0",
+    "unirest": "^0.4.2"
+  },
+  "engines": {
+    "node": "4.2.6"
+  }
+}
