@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<title></title>
+	<link rel="stylesheet" href="css/bulma.min.css">
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		
+		<nav class="navbar">
+			<p class="navbar-item is-centered">
+				<a class="link is-info" href="/">Home</a>
+		  	</p>
+		  	<p class="navbar-item is-centered">
+				<a class="link is-info" href="/redirect">Connect</a>
+		  	</p>
+		  	<h1 class="navbar-item is-centered title" style="line-height:70px">
+				<a href="/">fidor-pusher</a>
+		  	</h1>
+		  	<p class="navbar-item is-centered">
+				<a class="link is-info" href="/account">Account</a>
+		  	</p>
+		  	<p class="navbar-item is-centered">
+				<a class="link is-info" href="https://source.horse" target="_blank">source.horse</a>
+		  	</p>
+		</nav>
+	
+	
+	
+	</div>
+
+
+	<section class="section">
+		<div class="container">
+			
+			<div class="heading">
+		  		<h1 class="title">Account</h1>
+		  		<h2 class="subtitle">
+					All the stuff that is user configurable is <strong>here</strong>
+		  		</h2>
+			</div>
+			
+			<div class="content">
+				<p>
+					User token is: <%= token.access_token %>
+				</p>
+				<h3 class="title">User</h3>
+				<pre>
+<%= JSON.stringify(user, null, '    ') %>
+				</pre>
+				<h3 class="title">Account</h3>
+				<pre>
+<%= JSON.stringify(account, null, '    ') %>
+				</pre>
+			</div>
+			
+	  	</div>
+	</section>
+	
+	
+
+
+
+</body>
+</html>
