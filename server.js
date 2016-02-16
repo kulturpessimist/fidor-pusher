@@ -43,24 +43,30 @@ app.get('/', function(request, response) {
 });
 
 app.get('/redirect', function(request, response) {
+	var token = JSON.parse(request.session.token);
 
-    var oauth_url = app.get('FIDOR_AUTH_URL') + '/authorize' +
-    				'?client_id=' + app.get('FIDOR_OAUTH_CLIENT_ID') +
-    				'&state=' + app.get('STATE') +
-    				'&response_type=code' +
-    				'&redirect_uri=' + encodeURIComponent( 'http://' + request.headers.host + '/oauth?endpoint=/account' );
-    console.log('Redirect ->', oauth_url);
-    response.writeHead( 307, { 'location': oauth_url } );
-    response.end();
-        
+	if( token.hasOwnProperty('refresh_token') ){
+		response.writeHead( 307, { "location": '/refresh' } );
+		response.end();
+	}else{
+		var oauth_url = app.get('FIDOR_AUTH_URL') + '/authorize' +
+						'?client_id=' + app.get('FIDOR_OAUTH_CLIENT_ID') +
+						'&state=' + app.get('STATE') +
+						'&response_type=code' +
+						'&redirect_uri=' + encodeURIComponent( 'http://' + request.headers.host + '/oauth?endpoint=/account' );
+		console.log('Redirect ->', oauth_url);
+		response.writeHead( 307, { 'location': oauth_url } );
+		response.end();
+	}
+
 });
 
 app.get('/oauth', function(request, response) {
 	var code	= request.query.code,
 		target	= request.query.endpoint;
-		
+
 	request.session.code = code;
-		
+
 	unirest.post( app.get('FIDOR_AUTH_URL') + '/token' )
 		.auth( app.get('FIDOR_OAUTH_CLIENT_ID'), app.get('FIDOR_OAUTH_CLIENT_SECRET'), true )
 		.send('code=' + code )
@@ -69,34 +75,32 @@ app.get('/oauth', function(request, response) {
 		.send('grant_type=authorization_code')
 		.end( function(oauth_response){
 			console.log( 'TOKEN ->', oauth_response.body );
+			oauth_response.body.issued = Math.round(Date.now() / 1000);
 			request.session.token = JSON.stringify( oauth_response.body );
 			response.writeHead( 307, { "location": target } );
-			response.end()
+			response.end();
 		});
-		
+
 });
 
 
 app.get('/refresh', function(request, response) {
 	var token = JSON.parse(request.session.token),
 		rt = token.refresh_token;
-	console.log(rt);
 
 	var r = unirest.post( app.get('FIDOR_AUTH_URL') + '/token' )
 		.auth( app.get('FIDOR_OAUTH_CLIENT_ID'), app.get('FIDOR_OAUTH_CLIENT_SECRET'), true )
 		.send('refresh_token=' + rt )
 		.send('state=' +  app.get('STATE') )
-		//.send('client_id=' + app.get('FIDOR_OAUTH_CLIENT_ID') )
-		//.send('redirect_uri=' + encodeURIComponent( "http://" + request.headers.host + "/oauth?endpoint=" + target) )
 		.send('grant_type=refresh_token')
 		.end( function(oauth_response){
 			console.log( 'Refreshed TOKEN ->', oauth_response.body );
+			oauth_response.body.issued = Math.round(Date.now() / 1000);
 			request.session.token = JSON.stringify( oauth_response.body );
 			response.writeHead( 307, { 'location': '/account' } );
 			response.end()
 		});
-		
-	console.log(r);
+
 });
 
 app.get('/account', function(request, response) {
@@ -112,29 +116,35 @@ app.get('/account', function(request, response) {
 			email: ""
 		}
 	}
-	
+
 	unirest.get( app.get('FIDOR_API_URL') + 'accounts' )
 		.header( 'Authorization', 'Bearer ' + token.access_token)
 		.header( 'Accept', 'application/vnd.fidor.de; version=1,text/json')
 		.end( function(r){
-			var result = r.body[0];
-			params._id = result.id + "-" + uuid.v4();
-			params.user = {
-				name: result.customers[0].first_name,
-				nick: result.customers[0].nick,
-				last_update: result.customers[0].updated_at
-			};
-			params.notification = {
-				email: result.customers[0].email,
-				pushover: ""
-			};
-			params.account = {
-				id: result.id,
-				iban: result.iban,
-				balance: result.balance,
-				last_update: result.updated_at
+			console.log(r.body);
+			if(r.body.code==401){
+				response.writeHead( 307, { 'location': '/refresh' } );
+				response.end();
+			}else{
+				var result = r.body[0];
+				params._id = result.id + "-" + uuid.v4();
+				params.user = {
+					name: result.customers[0].first_name,
+					nick: result.customers[0].nick,
+					last_update: result.customers[0].updated_at
+				};
+				params.notification = {
+					email: result.customers[0].email,
+					pushover: ""
+				};
+				params.account = {
+					id: result.id,
+					iban: result.iban,
+					balance: result.balance,
+					last_update: result.updated_at
+				}
+				response.render('account', { params: params });
 			}
-			response.render('account', params);
 		} );
 });
 
@@ -143,16 +153,6 @@ app.get('/account', function(request, response) {
 app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
 });
-
-
-
-
-
-
-
-
-
-
 
 
 

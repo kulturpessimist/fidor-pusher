@@ -1,71 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de-DE">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<title></title>
+	<title>fidor pusher</title>
 	<link rel="stylesheet" href="css/bulma.min.css">
-	<script type="text/javascript" src="js/main.js"></script>
+	<link rel="stylesheet" href="font/source-serif-pro.css">
+	<link rel="stylesheet" href="font/font-awesome.min.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+
 	<div class="container">
-		
+
 		<nav class="navbar">
-			<p class="navbar-item is-centered">
+			<p class="navbar-item is-text-centered">
 				<a class="link is-info" href="/">Home</a>
 		  	</p>
-		  	<p class="navbar-item is-centered">
-				<a class="link is-info" href="/redirect">Connect</a>
+		  	<p class="navbar-item is-text-centered">
+				<a class="link is-success" href="/redirect">Connect</a>
 		  	</p>
-		  	<h1 class="navbar-item is-centered title" style="line-height:70px">
+		  	<h1 class="navbar-item is-text-centered title" style="line-height:70px; margin-top:14px;">
 				<a href="/">fidor-pusher</a>
 		  	</h1>
-		  	<p class="navbar-item is-centered">
+		  	<p class="navbar-item is-text-centered">
 				<a class="link is-info" href="/account">Account</a>
 		  	</p>
-		  	<p class="navbar-item is-centered">
-				<a class="link is-info" href="https://source.horse" target="_blank">source.horse</a>
+		  	<p class="navbar-item is-text-centered">
+			  	presented by<br/>
+				<a class="link is-danger" href="https://source.horse" target="_blank">source.horse</a>
 		  	</p>
 		</nav>
-	
-	
-	
-	</div>
 
+	</div>
 
 	<section class="section">
 		<div class="container">
-			
+
 			<div class="heading">
 		  		<h1 class="title">Account</h1>
 		  		<h2 class="subtitle">
 					All the stuff that is user configurable is <strong>here</strong>
 		  		</h2>
 			</div>
-			
+
 			<div class="content">
-				<h3 class="title">Token</h3>
+				Ich würde gerne per...
+			</div>
+
+			<div class="columns">
+				<div class="column is-2 is-offset-1">
+					<span class="subtitle">Email</span>
+				</div>
+				<div class="column is-1">
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="emailonoffswitch">
+						<label class="onoffswitch-label" for="emailonoffswitch"></label>
+					</div>
+				</div>
+				<div class="column is-5">
+					<input class="input is-large" type="text" placeholder="Email Adresse" value="<%=params.notification.email%>">
+				</div>
+			</div>
+			<div class="columns">
+				<div class="column is-2 is-offset-1">
+					<span class="subtitle">Pushover</span>
+				</div>
+				<div class="column is-1">
+					<div class="onoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pushoveronoffswitch">
+						<label class="onoffswitch-label" for="pushoveronoffswitch"></label>
+					</div>
+				</div>
+				<div class="column is-5">
+					<input class="input is-large" type="text" placeholder="Pushover Key" value="<%=params.notification.pushover%>">
+				</div>
+			</div>
+
+			<div class="content">
+				... benachrichtigt werden.
+			</div>
+
+			<div class="content">
+				<h3 class="title">Options</h3>
 				<pre>
-<%= JSON.stringify(token, null, '    ') %>
-				</pre>
-				<h3 class="title">User</h3>
-				<pre>
-<%= JSON.stringify(user, null, '    ') %>
-				</pre>
-				<h3 class="title">Account</h3>
-				<pre>
-<%= JSON.stringify(account, null, '    ') %>
+<%= JSON.stringify(params, null, '    ') %>
 				</pre>
 			</div>
-			
+
 	  	</div>
 	</section>
-	
-	
 
+	<footer class="footer">
+			<div class="container">
+				<div class="content is-centered">
+			  		<p>
+						<strong>fidor-pusher</strong> by <a href="https://www.schedler.co">Alex Schedler</a>.
+						The source code is licensed under <a rel="license" href="https://opensource.org/licenses/BSD-2-Clause">BSD-2</a><br/>
+						and available on github kulturpessimist/fidor-pusher.<br/>
+			  		</p>
+				</div>
+			</div>
+		</footer>
 
-
-</body>
-</html>
+	</body>
+	</html>
