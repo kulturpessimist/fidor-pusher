@@ -77,6 +77,28 @@ app.get('/oauth', function(request, response) {
 });
 
 
+app.get('/refresh', function(request, response) {
+	var token = JSON.parse(request.session.token),
+		rt = token.refresh_token;
+	console.log(rt);
+
+	var r = unirest.post( app.get('FIDOR_AUTH_URL') + '/token' )
+		.auth( app.get('FIDOR_OAUTH_CLIENT_ID'), app.get('FIDOR_OAUTH_CLIENT_SECRET'), true )
+		.send('refresh_token=' + rt )
+		.send('state=' +  app.get('STATE') )
+		//.send('client_id=' + app.get('FIDOR_OAUTH_CLIENT_ID') )
+		//.send('redirect_uri=' + encodeURIComponent( "http://" + request.headers.host + "/oauth?endpoint=" + target) )
+		.send('grant_type=refresh_token')
+		.end( function(oauth_response){
+			console.log( 'Refreshed TOKEN ->', oauth_response.body );
+			request.session.token = JSON.stringify( oauth_response.body );
+			response.writeHead( 307, { 'location': '/account' } );
+			response.end()
+		});
+		
+	console.log(r);
+});
+
 app.get('/account', function(request, response) {
 	var token = JSON.parse(request.session.token);
 	var params = {

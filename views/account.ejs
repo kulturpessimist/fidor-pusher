@@ -46,9 +46,10 @@
 			</div>
 			
 			<div class="content">
-				<p>
-					User token is: <%= token.access_token %>
-				</p>
+				<h3 class="title">Token</h3>
+				<pre>
+<%= JSON.stringify(token, null, '    ') %>
+				</pre>
 				<h3 class="title">User</h3>
 				<pre>
 <%= JSON.stringify(user, null, '    ') %>
