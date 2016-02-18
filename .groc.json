@@ -1,0 +1,4 @@
+{
+	"glob": ["server.js", "worker.js"],
+	"out": "docs"
+}

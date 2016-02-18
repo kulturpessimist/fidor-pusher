@@ -16,17 +16,11 @@
 
 		<nav class="navbar">
 			<p class="navbar-item is-text-centered">
-				<a class="link is-info" href="/">Home</a>
-		  	</p>
-		  	<p class="navbar-item is-text-centered">
-				<a class="link is-success" href="/redirect">Connect</a>
-		  	</p>
-		  	<h1 class="navbar-item is-text-centered title" style="line-height:70px; margin-top:14px;">
-				<a href="/">fidor-pusher</a>
-		  	</h1>
-		  	<p class="navbar-item is-text-centered">
 				<a class="link is-info" href="/account">Account</a>
 		  	</p>
+		  	<h1 class="navbar-item is-text-centered title" style="line-height:70px; margin-top:14px;">
+				<a href="/">fidor pusher</a>
+		  	</h1>
 		  	<p class="navbar-item is-text-centered">
 			  	presented by<br/>
 				<a class="link is-danger" href="https://source.horse" target="_blank">source.horse</a>
@@ -45,8 +39,13 @@
 		  		</h2>
 			</div>
 
+			<div class="heading">
+			  	<h3 class="title">Einstellungen</h3>
+			</div>
 			<div class="content">
-				Ich würde gerne per...
+				<p>
+					Ich würde gerne per...
+				</p>
 			</div>
 
 			<div class="columns">
@@ -55,12 +54,13 @@
 				</div>
 				<div class="column is-1">
 					<div class="onoffswitch">
-						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="emailonoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="emailonoffswitch" <%= params.notification.email.active?"checked":"" %> >
 						<label class="onoffswitch-label" for="emailonoffswitch"></label>
 					</div>
 				</div>
 				<div class="column is-5">
-					<input class="input is-large" type="text" placeholder="Email Adresse" value="<%=params.notification.email%>">
+					<input class="input is-large" type="text" placeholder="Email Adresse"
+						value="<%=params.notification.email.address%>">
 				</div>
 			</div>
 			<div class="columns">
@@ -69,17 +69,33 @@
 				</div>
 				<div class="column is-1">
 					<div class="onoffswitch">
-						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pushoveronoffswitch">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pushoveronoffswitch"
+						<%= params.notification.pushover.active?"checked":"" %> >
 						<label class="onoffswitch-label" for="pushoveronoffswitch"></label>
 					</div>
 				</div>
 				<div class="column is-5">
-					<input class="input is-large" type="text" placeholder="Pushover Key" value="<%=params.notification.pushover%>">
+					<input class="input is-large" type="text" placeholder="Pushover Key"
+						value="<%=params.notification.pushover.key%>">
 				</div>
 			</div>
 
 			<div class="content">
-				... benachrichtigt werden.
+				<p>
+					... benachrichtigt werden.
+				</p>
+			</div>
+
+			<div class="heading">
+			  	<h3 class="title">Account löschen</h3>
+			</div>
+			<div class="content">
+				<p>
+					... benachrichtigt werden.
+				</p>
+				<p class="is-text-centered">
+					<a class="button is-danger is-large is-outlined" href="/delete">Account löschen</a>
+				</p>
 			</div>
 
 			<div class="content">
@@ -94,7 +110,7 @@
 
 	<footer class="footer">
 			<div class="container">
-				<div class="content is-centered">
+				<div class="content is-text-centered">
 			  		<p>
 						<strong>fidor-pusher</strong> by <a href="https://www.schedler.co">Alex Schedler</a>.
 						The source code is licensed under <a rel="license" href="https://opensource.org/licenses/BSD-2-Clause">BSD-2</a><br/>

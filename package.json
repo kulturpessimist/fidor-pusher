@@ -9,15 +9,16 @@
   },
   "main": "server.js",
   "scripts": {
+    "heroku": "heroku local web",
     "start": "node server.js",
-    "worker": "node worker.js"
+    "worker": "node worker.js",
+    "docs": "node_modules/groc/bin/groc"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-session": "^2.0.0-alpha.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "nano": "^6.2.0",
     "pushover-notifications": "^0.2.2",
     "sendgrid": "^2.0.0",
     "unirest": "^0.4.2",
@@ -25,5 +26,8 @@
   },
   "engines": {
     "node": "4.2.6"
+  },
+  "devDependencies": {
+    "groc": "^0.8.0"
   }
 }

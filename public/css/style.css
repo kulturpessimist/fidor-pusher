@@ -15,6 +15,9 @@ p{
 	font-weight: 900;
 }
 
+.heading{
+	margin-bottom: 40px;
+}
 .column{
   display: flex;
   flex-direction: column;
@@ -24,6 +27,7 @@ p{
 	line-height: 3rem;
 	text-align: right;
 }
+
 
 .onoffswitch {
 	position: relative; width: 60px;
