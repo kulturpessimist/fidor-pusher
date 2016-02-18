@@ -201,11 +201,28 @@ app.get('/account', function(request, response) {
 		} );
 });
 
-app.get('/delete', function(request, response) {
+app.get('/delete/:id', function(request, response) {
+	// TODO
+	// replace :id with a more secure parameter... the id is quite easy to guess
+	unirest.head( app.get('CLOUDANT_URL') + '/' + request.params.id )
+		.auth( app.get('CLOUDANT_KEY'), app.get('CLOUDANT_PASSWORD'), true )
+		.send()
+		.end(function(couch_response){
+			console.log(couch_response);
+			if(couch_response.statusCode == 200){
 
-	request.session.token = "";
-	response.writeHead( 307, { 'location': '/' } );
-	response.end();
+				unirest.delete( app.get('CLOUDANT_URL') + '/' + request.params.id )
+					.query( 'rev=' + JSON.parse(couch_response.headers.etag) )
+					.auth( app.get('CLOUDANT_KEY'), app.get('CLOUDANT_PASSWORD'), true )
+					.send()
+					.end(function(couch_response){
+						console.log(couch_response);
+						request.session.token = "";
+						response.writeHead( 307, { 'location': '/' } );
+						response.end();
+					});
+			}
+		});
 
 });
 
