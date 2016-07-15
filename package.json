@@ -1,11 +1,11 @@
 {
-  "name": "fidor-pusher",
+  "name": "fidor-bot",
   "version": "0.1.0",
   "description": "A tiny helper to ping the user on any account movement",
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kulturpessimist/fidor-pusher.git"
+    "url": "https://github.com/kulturpessimist/fidor-bot.git"
   },
   "main": "server.js",
   "scripts": {
@@ -15,17 +15,17 @@
     "docs": "node_modules/groc/bin/groc"
   },
   "dependencies": {
-    "body-parser": "^1.15.0",
+    "body-parser": "^1.15.2",
     "cookie-session": "^2.0.0-alpha.1",
-    "ejs": "^2.4.1",
-    "express": "^4.13.4",
-    "pushover-notifications": "^0.2.2",
-    "sendgrid": "^2.0.0",
-    "unirest": "^0.4.2",
-    "uuid": "^2.0.1"
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "numeral": "^1.5.3",
+    "telegraf": "^2.4.0",
+    "unirest": "^0.5.0",
+    "uuid": "^2.0.2"
   },
   "engines": {
-    "node": "4.2.6"
+    "node": "6.3.0"
   },
   "devDependencies": {
     "groc": "^0.8.0"
